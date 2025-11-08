@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('staffs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('role_id')->constrained()->cascadeOnDelete();
+            $table->enum('role', ['admin', 'staff'])->default('staff');
             $table->string('name');
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();

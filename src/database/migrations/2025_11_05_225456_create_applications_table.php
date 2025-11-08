@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('work_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('application_status_id')->constrained()->cascadeOnDelete()->unique();
+            $table->foreignId('work_id')->constrained()->cascadeOnDelete()->unique();
             $table->timestamp('new_clock_in')->nullable();
             $table->timestamp('new_clock_out')->nullable();
             $table->timestamp('new_break_start')->nullable();
