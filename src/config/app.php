@@ -120,7 +120,45 @@ return [
 
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
-        'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+|--------------------------------------------------------------------------
+| Autoloaded Service Providers
+|--------------------------------------------------------------------------
+|
+| The service providers listed here will be automatically loaded on the
+| request to your application. Feel free to add your own services to
+| this array to grant expanded functionality to your applications.
+|
+*/
+
+    'providers' => [
+
+        /*
+        * Laravel Framework Service Providers...
+        */
+        Illuminate\Auth\AuthServiceProvider::class,
+        Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        Illuminate\Bus\BusServiceProvider::class,
+        Illuminate\Cache\CacheServiceProvider::class,
+        Illuminate\Database\DatabaseServiceProvider::class,
+        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+        Illuminate\Hashing\HashServiceProvider::class,
+        Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
+        Illuminate\Pagination\PaginationServiceProvider::class,
+        Illuminate\Session\SessionServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+
+        /*
+        * Application Service Providers...
+        */
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
+    ],
 ];
