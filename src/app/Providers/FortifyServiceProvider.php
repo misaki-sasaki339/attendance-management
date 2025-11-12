@@ -11,7 +11,14 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Event;
+use App\Models\Staff;
+use Illuminate\Auth\Notifications\VerifyEmail;
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -28,7 +35,7 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
-        Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
+        // Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
 
         Fortify::registerView(fn() => view('auth.register'));
         Fortify::loginView(fn() => view('auth.login'));

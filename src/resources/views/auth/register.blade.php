@@ -8,7 +8,7 @@
 <div class="register-container">
     <h2>会員登録</h2>
 
-    <form action="{{ url('/register') }}" class="form" method="POST">
+    <form action="{{ route('register') }}" class="form" method="POST">
     @csrf
     <div class="form-group">
         <label for="name">名前</label>

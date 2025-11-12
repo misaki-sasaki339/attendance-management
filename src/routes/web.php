@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\StaffLoginController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 // 新規会員登録(スタッフのみ)
-Route::get('/register', function() {
-    return view('auth.register');
-})->name('staff.register');
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
 
 // ログイン処理(スタッフ)
 Route::get('/login',[StaffLoginController::class, 'showLoginForm'])->name('staff.login');

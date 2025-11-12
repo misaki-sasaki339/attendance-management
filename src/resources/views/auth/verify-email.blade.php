@@ -10,10 +10,10 @@
         メール認証を完了してください。</p>
 
     {{--認証確認ボタン--}}
-    <a href="http://localhost:8025" target="_blank" class="form__button-submit">
+    <a href="" target="_blank" class="form__button-submit">
         メール認証はこちら
     </a>
-    
+
     {{--メール再送ボタン--}}
     <form method="POST" action="{{ route('verification.send') }}" class="form-resend">
         @csrf

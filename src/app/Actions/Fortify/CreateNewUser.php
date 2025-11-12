@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Redirect;
+
+use Illuminate\Support\Facades\Log;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -39,7 +42,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         // メール認証イベントの発火
-        event(new Registered($staff));
+        // event(new Registered($staff));
         return $staff;
     }
 }

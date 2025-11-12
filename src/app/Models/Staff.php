@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\VerifyEmailNotification;
+use Illuminate\Auth\Notifications\VerifyEmail;
 
 
-class Staff extends Authenticatable
+
+class Staff extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -36,6 +39,11 @@ class Staff extends Authenticatable
     // メール認証イベントの発火
     public function sendEmailVerificationNotification()
     {
+        static $sent = false;
+        if ($sent) {
+            return;
+        }
+        $sent = true;
         $this->notify(new VerifyEmailNotification());
     }
 
