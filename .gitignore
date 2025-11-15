@@ -24,3 +24,5 @@ Homestead.yaml
 Thumbs.db
 /docker/mysql/data/
 /docker/mysql/data/*
+/vendor/
+/src/vendor/
