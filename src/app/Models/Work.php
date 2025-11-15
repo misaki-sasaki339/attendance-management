@@ -95,4 +95,20 @@ class Work extends Model
         return sprintf('%02d:%02d', floor($workMinutes / 60), $workMinutes % 60);
     }
 
+    // 打刻機能
+    // 出勤打刻
+    public function clockIn(){
+        $this->clockIn = now();
+        $this->save();
+    }
+
+    // 退勤打刻
+    public function clockOut(){
+        $this->clock_out = now();
+        $this->save();
+    }
+
+
+
+
 }

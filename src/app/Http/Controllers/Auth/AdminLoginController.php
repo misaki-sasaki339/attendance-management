@@ -11,6 +11,8 @@ class AdminLoginController extends LoginController
     protected string $route = 'admin.login';
     protected string $role = 'admin';
 
+
+
     protected function authenticated(Request $request, $user)
     {
         return redirect()->route('admin.dashboard');

@@ -11,6 +11,16 @@ class StaffLoginController extends LoginController
     protected string $route = 'staff.login';
     protected string $role = 'staff';
 
+    public function showLoginForm()
+    {
+        return view('auth.login', [
+            'title' => $this->title,
+            'buttonLabel' => $this->buttonLabel,
+            'route' => $this->route,
+            'role' => $this->role,
+        ]);
+    }
+
     protected function authenticated(Request $request, $user)
     {
         return redirect()->route('staff.dashboard');
