@@ -6,9 +6,8 @@ use App\Http\Controllers\Auth\StaffLoginController;
 use App\Http\Controllers\Staff\WorkController as StaffWorkController;
 
 // 新規会員登録(スタッフのみ)
-Route::get('/register', function() {
-    return view('auth.register');
-})->name('staff.register');
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
 
 // ログイン処理(スタッフ)
 Route::get('/login',[StaffLoginController::class, 'showLoginForm'])->name('staff.login');
