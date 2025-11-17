@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Work extends Model
 {
@@ -98,7 +99,7 @@ class Work extends Model
     // 打刻機能
     // 出勤打刻
     public function clockIn(){
-        $this->clockIn = now();
+        $this->clock_in = now();
         $this->save();
     }
 
@@ -106,6 +107,15 @@ class Work extends Model
     public function clockOut(){
         $this->clock_out = now();
         $this->save();
+    }
+
+    // 当日の勤怠データを取得
+    public static function todayWork()
+    {
+        return static::where('staff_id', Auth::id())
+            ->whereDate('work_date', today())
+            ->with('breakTimes')
+            ->firstOrFail();
     }
 
 

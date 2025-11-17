@@ -32,7 +32,7 @@
     {{-- スタッフのログイン画面だけに表示 --}}
     @if($role === 'staff')
     <p class="register-link">
-        <a href="">会員登録はこちら</a>
+        <a href="{{ route('register') }}">会員登録はこちら</a>
     </p>
     @endif
 </div>

@@ -24,5 +24,9 @@ class StaffSeeder extends Seeder
             'password' => Hash::make('staff123'),
             'role' => 'staff'
         ]);
+
+        Staff::factory()->count(5)->create([
+            'role' => 'staff',
+        ]);
     }
 }

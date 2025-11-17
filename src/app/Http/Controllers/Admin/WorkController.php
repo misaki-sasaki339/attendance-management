@@ -9,7 +9,7 @@ use App\Http\Controllers\WorkController as BaseWorkController;
 class WorkController extends BaseWorkController
 {
     // 勤怠情報の取得
-    public function index(Request $request)
+    public function xxx(Request $request)
     {
         $staffId = $request->input('staff_id');
         $month = $request->input('month');

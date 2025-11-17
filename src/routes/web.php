@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\StaffLoginController;
 use App\Http\Controllers\Staff\WorkController as StaffWorkController;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 // 新規会員登録(スタッフのみ)
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -24,7 +25,10 @@ Route::middleware(['auth', 'role:staff'])
     ->prefix('attendance')
     ->name('attendance.')
     ->group(function() {
+        Route::get('/', [StaffWorkController::class, 'index'])->name('index');
         Route::post('/clock-in', [StaffWorkController::class, 'clockIn'])->name('clockIn');
         Route::post('/clock-out', [StaffWorkController::class, 'clockOut'])->name('clockOut');
+        Route::post('/break-start', [StaffWorkController::class, 'breakStart'])->name('breakStart');
+        Route::post('break-end', [StaffWorkController::class, 'breakEnd'])->name('breakEnd');
     });
 

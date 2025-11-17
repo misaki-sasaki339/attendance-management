@@ -23,6 +23,6 @@ class StaffLoginController extends LoginController
 
     protected function authenticated(Request $request, $user)
     {
-        return redirect()->route('staff.dashboard');
+        return redirect()->route('attendance.index');
     }
 }

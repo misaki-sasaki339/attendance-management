@@ -10,8 +10,51 @@ use App\Models\Work;
 
 class WorkController extends BaseWorkController
 {
+    // 打刻画面の表示
+    public function index()
+    {
+        $todayWork = Work::where('staff_id', Auth::id())
+            ->whereDate('work_date', today())
+            ->with('breakTimes')
+            ->first();
+        return view('staff.attendance', compact('todayWork'));
+    }
+
+    // 出勤打刻機能
+    public function clockIn()
+    {
+        $work = Work::todayWork();
+        $work->clockIn();
+        return back();
+    }
+
+    // 退勤打刻
+    public function clockOut()
+    {
+        $work = Work::todayWork();
+        $work->clockOut();
+        return back();
+    }
+
+    // 休憩入打刻
+    public function breakStart()
+    {
+        $work = Work::todayWork();
+        $work->breakTimes()->create(['break_start' => now()]);
+        return back();
+    }
+
+    // 休憩終了打刻
+    public function breakEnd()
+    {
+        $work = Work::todayWork();
+        $break = $work->breakTimes()->whereNull('break_end')->latest()->firstOrFail();
+        $break->update(['break_end' => now()]);
+        return back();
+    }
+
     // 勤怠情報の取得
-    public function index(Request $request)
+    public function xxx(Request $request)
     {
         $staffId = Auth::id();
         $month = $request->input('month');
@@ -19,31 +62,6 @@ class WorkController extends BaseWorkController
         $works = $this->getMonthlyWorks($staffId, $month);
 
         return view('staff.works.index', compact('works', 'month'));
-    }
-
-    // 出勤打刻機能
-    public function clockIn()
-    {
-        $work = Work::firstOrCreate([
-            'staff_id' => Auth::id(),
-            'work_date' => today(),
-        ]);
-
-        $work->clockIn();
-
-        return back();
-    }
-
-    // 退勤打刻
-    public function clockOut()
-    {
-        $work = Work::where('staff_id', Auth::id())
-            ->whereDate('work_date', today())
-            ->firstOrFail();
-
-        $work->clockOut();
-
-        return back();
     }
 }
 
