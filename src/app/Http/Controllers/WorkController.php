@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Work;
+use Illuminate\Support\Facades\Auth;
 
 class WorkController extends Controller
 {
@@ -29,9 +30,17 @@ class WorkController extends Controller
 
         // staffIdがあればそのidに絞る
         if (!is_null($staffId)) {
-            $query->where('staffId', $staffId);
+            $query->where('staff_id', $staffId);
         }
 
         return $query->get();
+    }
+
+    // 本人以外からのアクセスを禁止
+    protected function ensureOwner($work)
+    {
+        if ($work->staff_id != Auth::id()) {
+            abort(403, 'このデータへのアクセス権がありません');
+        }
     }
 }

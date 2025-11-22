@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('work_id')->constrained()->cascadeOnDelete()->unique();
             $table->timestamp('new_clock_in')->nullable();
             $table->timestamp('new_clock_out')->nullable();
-            $table->timestamp('new_break_start')->nullable();
-            $table->timestamp('new_break_end')->nullable();
+            $table->json('new_break_times')->nullable();
             $table->string('reason');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

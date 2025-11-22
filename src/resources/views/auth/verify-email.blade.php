@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="verify-container">
+<div class="container">
     <p class="message">登録していただいたメールアドレスに認証メールを送付しました。<br />
         メール認証を完了してください。</p>
 

@@ -27,7 +27,7 @@
     </div>
 
     <div class="form-group">
-        <label for="email">パスワード</label>
+        <label for="password">パスワード</label>
         <input class="form__input @error('password') is-invalid @enderror" type="password" name="password" id="password" >
         @error('password')
         <p class="error-message">{{ $message }}</p>
@@ -36,7 +36,7 @@
 
     <div class="form-group">
         <label for="password_confirmation">パスワード確認</label>
-        <input class="form__input @error('password') is-invalid @enderror" type="password" name="password_confirmation" id="password_confirmation">
+        <input class="form__input @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation" id="password_confirmation">
         @error('password_confirmation')
         <p class="error-message">{{ $message }}</p>
         @enderror

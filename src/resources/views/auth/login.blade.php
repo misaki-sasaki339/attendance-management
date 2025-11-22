@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="login-container">
+<div class="container">
     <h2>{{ $title }}</h2>
 
     <form action="{{ route($route) }}" class="form" method="POST">
@@ -21,7 +21,7 @@
     <div class="form-group">
         <label for="email">パスワード</label>
         <input class="form__input @error('password') is-invalid @enderror" type="password" name="password" id="password">
-        @error('email')
+        @error('password')
         <p class="error-message">{{ $message }}</p>
         @enderror
     </div>

@@ -60,25 +60,28 @@ class Work extends Model
         return '退勤済';
     }
 
-    // 休憩時間の計算
+    // 休憩時間の計算(分)
     private function calculateBreakMinutes(): int
     {
-        return $this->BreakTimes->sum(fn($break) =>
-            $break->break_end && $break->break_start
-                ? $break->break_end->diffInMinutes($break->break_start)
-                : 0
-        );
+        return $this->breakTimes->sum(function ($break) {
+            if ($break->break_start && $break->break_end) {
+                return $break->break_start->diffInMinutes($break->break_end, true);
+            }
+            return 0;
+        });
     }
 
-    // 休憩時間の取得
-    public function getTotalBreakTimeAttribute(): string
+    // 休憩合計時間(HH:MM)
+    public function getBreakTimeAttribute(): string
     {
         $minutes = $this->calculateBreakMinutes();
-        return sprintf('%02d:%02d', floor($minutes / 60), $minutes/ 60);
+        $hours = intdiv($minutes, 60);
+        $mins = $minutes % 60;
+        return sprintf('%d:%02d', $hours, $mins);
     }
 
-    // 勤務時間の計算
-    public function getWorkingHoursAttribute(): ?string
+    // 勤務時間の計算(HH:MM)
+    public function getWorkTimeAttribute(): ?string
     {
         // 出勤または退勤していない場合はnull
         if (is_null($this->clock_in) || is_null($this->clock_out)) {
@@ -86,14 +89,16 @@ class Work extends Model
         }
 
         // 1日の総労働時間
-        $totalMinutes = $this->clock_out->diffInMinutes($this->clock_in);
+        $total = $this->clock_in->diffInMinutes($this->clock_out, true);
 
         // 休憩分を減算
-        $breakMinutes = $this->calculateBreakMinutes();
+        $break = $this->calculateBreakMinutes();
 
         // 実労働時間の計算
-        $workMinutes = max($totalMinutes - $breakMinutes, 0);
-        return sprintf('%02d:%02d', floor($workMinutes / 60), $workMinutes % 60);
+        $work = max($total - $break, 0);
+        $hours = intdiv($work, 60);
+        $mins = $work % 60;
+        return sprintf('%d:%02d', $hours, $mins);
     }
 
     // 打刻機能
@@ -117,8 +122,4 @@ class Work extends Model
             ->with('breakTimes')
             ->firstOrFail();
     }
-
-
-
-
 }

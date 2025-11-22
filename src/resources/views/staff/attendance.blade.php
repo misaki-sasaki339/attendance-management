@@ -5,16 +5,16 @@
 @endsection
 
 @section('content')
-<div class="attendance-container">
+<div class="container">
 
-    <p class="attendance-date">
+    <div class="attendance-date">
         {{ now()->format('Y年m月d日') }}
         ({{ ['日','月','火','水','木','金','土'][now()->dayOfWeek] }})
-    </p>
+    </div>
     <div id="current-time" class="attendance-time"></div>
 
     @if ($todayWork)
-        <p class="work-status">{{ $todayWork->status }}</p>
+        <div class="work-status">{{ $todayWork->status }}</div>
 
         @if ($todayWork->status === '勤務外')
             @include('staff.buttons.not_working')

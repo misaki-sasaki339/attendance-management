@@ -1,35 +1,39 @@
 <?php
 
-namespace App\Actions\Fortify;
-
-use App\Models\Staff;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
-use Laravel\Fortify\Contracts\CreatesNewUsers;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\Staff;
 
-use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateNewUser implements CreatesNewUsers
+class RegisterRequest extends FormRequest
 {
-    use PasswordValidationRules;
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     /**
-     * Validate and create a newly registered user.
+     * Get the validation rules that apply to the request.
      *
-     * @param  array<string, string>  $input
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function create(array $input): Staff
+    public function rules(): array
     {
-        $rules = [
+        return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(Staff::class)],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password_confirmation' => ['required'],
         ];
+    }
 
-        $messages = [
+    public function messages()
+    {
+        return [
             'name.required' => 'お名前を入力してください',
             'name.string' => 'お名前は文字で入力してください',
             'name.max' => 'お名前は255字以下で入力してください',
@@ -41,16 +45,8 @@ class CreateNewUser implements CreatesNewUsers
             'password.required' => 'パスワードを入力してください',
             'password.string' => 'パスワードは文字列で入力してください',
             'password.min' => 'パスワードは8文字以上で入力してください',
-            'password.confirmed' => 'パスワードと一致しません'
+            'password.confirmed' => 'パスワードと一致しません',
+            'password_confirmation.required' => 'パスワードを入力してください',
         ];
-        Validator::make($input, $rules, $messages)->validate();
-
-        $staff =  Staff::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-        ]);
-
-        return $staff;
     }
 }

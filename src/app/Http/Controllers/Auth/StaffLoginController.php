@@ -23,6 +23,10 @@ class StaffLoginController extends LoginController
 
     protected function authenticated(Request $request, $user)
     {
+        // 未認証の場合はメール認証に飛ばす
+        if (!$user->hasVerifiedEmail()) {
+            return redirect()->route('verification.notice');
+        }
         return redirect()->route('attendance.index');
     }
 }

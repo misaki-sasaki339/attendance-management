@@ -13,16 +13,15 @@ class Application extends Model
         'work_id',
         'new_clock_in',
         'new_clock_out',
-        'new_break_start',
-        'new_break_end',
-        'reason'
+        'new_break_times',
+        'reason',
+        'status',
     ];
 
     protected $casts = [
         'new_clock_in' => 'datetime',
         'new_clock_out' => 'datetime',
-        'new_break_start' => 'datetime',
-        'new_break_end' => 'datetime',
+        'new_break_times' => 'array',
     ];
 
     // リレーションの定義

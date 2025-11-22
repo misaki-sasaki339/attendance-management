@@ -21,7 +21,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
 });
 
 //ログイン後機能(スタッフ)
-Route::middleware(['auth', 'role:staff'])
+Route::middleware(['auth', 'verified', 'role:staff'])
     ->prefix('attendance')
     ->name('attendance.')
     ->group(function() {

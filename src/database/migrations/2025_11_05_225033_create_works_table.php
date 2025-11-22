@@ -19,7 +19,7 @@ return new class extends Migration
             $table->datetime('clock_out')->nullable();
             $table->timestamps();
 
-            $table->unique('staff_id', 'work_date');
+            $table->unique(['staff_id', 'work_date']);
         });
     }
 
