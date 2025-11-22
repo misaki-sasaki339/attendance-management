@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\VerifyEmailNotification;
 use Illuminate\Auth\Notifications\VerifyEmail;
-
+use Database\Factories\StaffFactory;
 
 
 class Staff extends Authenticatable implements MustVerifyEmail

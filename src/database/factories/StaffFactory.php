@@ -10,15 +10,13 @@ use App\Models\Staff;
  */
 class StaffFactory extends Factory
 {
-    protected $locale = 'ja_JP';
 
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => fake('ja_JP')->lastName . ' ' . fake('ja_JP')->firstName,
+            'email' => $this->faker->safeEmail(),
             'password' => bcrypt('password123'),
-            'role' => 'staff',
         ];
     }
 }

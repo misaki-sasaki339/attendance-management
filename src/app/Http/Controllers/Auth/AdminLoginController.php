@@ -15,6 +15,6 @@ class AdminLoginController extends LoginController
 
     protected function authenticated(Request $request, $user)
     {
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.index');
     }
 }

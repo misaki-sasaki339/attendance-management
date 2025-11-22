@@ -14,9 +14,9 @@
     <h2>勤怠一覧</h2>
 
     <div class="month-selector">
-        <a href="{{ route('attendance.index', ['month'=>$prev]) }}" class="month-btn">←前月</a>
+        <a href="{{ route('attendance.index', ['month'=>$prev]) }}" class="calender-btn">←前月</a>
         <span class="current-month"><img src="{{ asset('img/カレンダー.png') }}" alt="カレンダー">{{ $month->format('Y/m') }}</span>
-        <a href="{{ route('attendance.index', ['month'=>$next]) }}" class="month-btn">→翌月</a>
+        <a href="{{ route('attendance.index', ['month'=>$next]) }}" class="calender-btn">→翌月</a>
     </div>
 
     <table class="attendance-table">

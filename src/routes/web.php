@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\StaffLoginController;
 use App\Http\Controllers\Staff\WorkController as StaffWorkController;
+use App\Http\Controllers\Admin\WorkController as AdminWorkController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 // 新規会員登録(スタッフのみ)
@@ -30,5 +31,13 @@ Route::middleware(['auth', 'verified', 'role:staff'])
         Route::post('/clock-out', [StaffWorkController::class, 'clockOut'])->name('clockOut');
         Route::post('/break-start', [StaffWorkController::class, 'breakStart'])->name('breakStart');
         Route::post('break-end', [StaffWorkController::class, 'breakEnd'])->name('breakEnd');
+    });
+
+// ログイン後機能(管理者)
+Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function() {
+        Route::get('/', [AdminWorkController::class, 'index'])->name('index');
     });
 

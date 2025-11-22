@@ -29,8 +29,8 @@ class WorkWithBreakSeeder extends Seeder
                 $work = Work::factory()->create([
                     'staff_id' => $staff->id,
                     'work_date' => $date,
-                    'clock_in' => Carbon::parse($date)->setTime(9, 0),
-                    'clock_out' => Carbon::parse($date)->setTime(18, 0),
+                    'clock_in' => Carbon::parse($date)->setTime(rand(8, 10), rand(0, 59)),
+                    'clock_out' => Carbon::parse($date)->setTime(rand(17, 19), rand(0, 59)),
                 ]);
 
                 BreakTime::create([
