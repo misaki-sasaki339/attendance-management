@@ -30,7 +30,7 @@
             <td>{{ $work->clock_out->format('H:i') }}</td>
             <td>{{ $work->break_time }}</td>
             <td>{{ $work->work_time }}</td>
-            <td><a class="work-detail" href="">詳細</a></td>
+            <td><a class="work-detail" href="{{ route('admin.edit', ['id' => $work->id]) }}"">詳細</a></td>
         </tr>
         @endforeach
     </table>

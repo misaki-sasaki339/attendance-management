@@ -43,4 +43,11 @@ class WorkController extends Controller
             abort(403, 'このデータへのアクセス権がありません');
         }
     }
+
+    // 勤怠に紐づく申請・休憩データを取得
+    protected function findWorkWithRelations($id)
+    {
+        return Work::with(['application', 'breakTimes'])->findOrFail($id);
+    }
+
 }

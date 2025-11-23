@@ -30,14 +30,48 @@ class WorkController extends BaseWorkController
         ]);
     }
 
-    // 勤怠情報の取得
-    public function xxx(Request $request)
+    // 勤怠詳細の取得
+    public function edit($id)
     {
-        $staffId = $request->input('staff_id');
-        $month = $request->input('month');
+        $work = $this->findWorkWithRelations($id);
+        $isReadonly = $work->isPending();
+        $breaks = $work->breakTimes;
 
-        $works = $this->getMonthlyWorks($staffId, $month);
+    // 修正申請中のときは「閲覧専用画面」に切り替える
+    if ($isReadonly) {
+        return view('works.detail', [
+            'work' => $work,
+            'breaks' => $breaks,
+            'isReadonly' => $isReadonly,
+        ]);
+    }
 
-        return view('admin.works.index', compact('works', 'month'));
+        // ない場合は編集画面へ
+        return view('works.detail', [
+            'work' => $work,
+            'breaks' => $breaks,
+            'isReadonly' => $isReadonly,
+        ]);
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $work = Work::with('breakTimes')->findOrFail($id);
+
+        $work->clock_in = $request->clock_in;
+        $work->clock_out = $request->clock_out;
+        $work->reason = $request->reason;
+        $work->save();
+
+        $work->breakTimes()->delete();
+        foreach ($request->break_start as $i => $start) {
+            if ($start || $request->break_end[$i]) {
+                $work->breakTimes()->create([
+                    'break_start' => $start,
+                    'break_end' => $request->break_end[$i] ?? null,
+                ]);
+            }
+        }
+        return redirect()->route('admin.edit', $id)->with('success', '勤怠を更新しました');
     }
 }

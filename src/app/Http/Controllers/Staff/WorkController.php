@@ -62,7 +62,7 @@ class WorkController extends BaseWorkController
         $staffId = Auth::id();
         $monthString = $request->input('month');
 
-        // mont指定の場合はCarbonにパース、指定ない場合は今月
+        // month指定の場合はCarbonにパース、指定ない場合は今月
         $targetMonth = $monthString ? Carbon::parse($monthString) : now();
 
         $works = $this->getMonthlyWorks($staffId, $targetMonth);
@@ -102,20 +102,25 @@ class WorkController extends BaseWorkController
     // 勤怠詳細の取得
     public function edit($id)
     {
-        $work = Work::findOrFail($id);
+        $work = $this->findWorkWithRelations($id);
         $this->ensureOwner($work);
 
-        // 修正申請がある場合は閲覧専用画面へ飛ばす
-        if ($work->application) {
-            return view('staff.pending', compact('work'));
-        }
+        $isReadonly = $work->isPending();
 
-        // ない場合は編集画面へ
-        return view('staff.edit', compact('work'));
+        // break の作り方を分岐
+        if ($isReadonly) {
+            $breaks = $work->breakTimes;
+        } else {
+            // 編集用には最後に1個空の BreakTime を足す
+            $breaks = $work->breakTimes->isEmpty()
+                ? collect([new \App\Models\BreakTime()])
+                : $work->breakTimes->push(new \App\Models\BreakTime());
+        }
+        return view('works.detail', compact('work', 'breaks', 'isReadonly'));
     }
 
     // 勤怠詳細の修正
-    public function update(Request $request, $id)
+    public function store(Request $request, $id)
     {
         $work = Work::findOrFail($id);
         $this->ensureOwner($work);
@@ -159,7 +164,7 @@ class WorkController extends BaseWorkController
             ],
         );
 
-        return redirect()->route('attendance.index')->with('message', '修正申請を送信しました');
+        return redirect()->route('attendance.edit', $work->id)->with('message', '修正申請を送信しました');
 
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('work_date');
             $table->datetime('clock_in')->nullable();
             $table->datetime('clock_out')->nullable();
+            $table->text('reason')->nullable();
             $table->timestamps();
 
             $table->unique(['staff_id', 'work_date']);

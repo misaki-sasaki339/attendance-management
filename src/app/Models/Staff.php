@@ -47,4 +47,8 @@ class Staff extends Authenticatable implements MustVerifyEmail
         $this->notify(new VerifyEmailNotification());
     }
 
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 }

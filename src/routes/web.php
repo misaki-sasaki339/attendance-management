@@ -26,11 +26,14 @@ Route::middleware(['auth', 'verified', 'role:staff'])
     ->prefix('attendance')
     ->name('attendance.')
     ->group(function() {
-        Route::get('/', [StaffWorkController::class, 'index'])->name('index');
+        Route::get('/', [StaffWorkController::class, 'today'])->name('today');
         Route::post('/clock-in', [StaffWorkController::class, 'clockIn'])->name('clockIn');
         Route::post('/clock-out', [StaffWorkController::class, 'clockOut'])->name('clockOut');
         Route::post('/break-start', [StaffWorkController::class, 'breakStart'])->name('breakStart');
-        Route::post('break-end', [StaffWorkController::class, 'breakEnd'])->name('breakEnd');
+        Route::post('/break-end', [StaffWorkController::class, 'breakEnd'])->name('breakEnd');
+        Route::get('/list', [StaffWorkController::class, 'index'])->name('index');
+        Route::get('/detail/{id}', [StaffWorkController::class,'edit'])->name('edit');
+        Route::post('/detail/{id}/store', [StaffWorkController::class, 'store'])->name('store');
     });
 
 // ログイン後機能(管理者)
@@ -38,6 +41,8 @@ Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function() {
-        Route::get('/', [AdminWorkController::class, 'index'])->name('index');
+        Route::get('/list', [AdminWorkController::class, 'index'])->name('index');
+        Route::get('/attendance/{id}', [AdminWorkController::class, 'edit'])->name('edit');
+        Route::put('/attendance/{id}', [AdminWorkController::class, 'update'])->name('update');
     });
 

@@ -15,6 +15,7 @@ class Work extends Model
         'work_date',
         'clock_in',
         'clock_out',
+        'reason',
     ];
 
     protected $casts = [
@@ -121,5 +122,11 @@ class Work extends Model
             ->whereDate('work_date', today())
             ->with('breakTimes')
             ->firstOrFail();
+    }
+
+    // 修正申請中の勤怠を取得
+    public function isPending()
+    {
+        return $this->application && $this->application->status === 'pending';
     }
 }

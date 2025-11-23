@@ -35,9 +35,13 @@ class Application extends Model
         return $this->hasOne(Approval::class);
     }
 
-    // 修正申請の承認状態を導出
-    public function getStatusAttribute(): string
+    // 修正申請の承認状態を導出して表示
+    public function getStatusLabelAttribute(): string
     {
-        return $this->approval ? '承認済み' : '承認待ち';
+        return match ($this->status) {
+            'pending' => '承認待ち',
+            'approved' => '承認済み',
+            default => '不明',
+        };
     }
 }
