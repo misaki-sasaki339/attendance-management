@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\WorkController as BaseWorkController;
+use App\Http\Controllers\BaseWorkController;
 use App\Models\Work;
 use App\Models\Application;
 use Carbon\Carbon;
@@ -56,74 +56,61 @@ class WorkController extends BaseWorkController
         return back();
     }
 
-    // 勤怠情報の取得
+    // 勤怠情報(月次)の取得
     public function index(Request $request)
     {
         $staffId = Auth::id();
         $monthString = $request->input('month');
-
-        // month指定の場合はCarbonにパース、指定ない場合は今月
         $targetMonth = $monthString ? Carbon::parse($monthString) : now();
 
-        $works = $this->getMonthlyWorks($staffId, $targetMonth);
+        $days = $this->getMonthlyAttendance($staffId, $targetMonth);
 
-        $period = CarbonPeriod::create(
-            $targetMonth->copy()->startOfMonth(),
-            $targetMonth->copy()->endOfMonth(),
-        );
-
-        $days = collect();
-
-        /** @var \Carbon\Carbon $date */
-        foreach ($period as $date) {
-            $work = null;
-
-            foreach ($works as $w) {
-                if ($w->work_date->isSameDay($date)) {
-                    $work = $w;
-                    break;
-                }
-            }
-
-            if (!$work) {
-                $work = new Work([
-                    'id' => null,
-                    'work_date' => $date->copy(),
-                    'clock_in' => null,
-                    'clock_out' => null,
-                ]);
-            }
-            $days->push($work);
-        }
-
-        return view('staff.index', ['works'=>$days, 'month'=>$targetMonth]);
+        return view('works.index', [
+            'works' => $days,
+            'month' => $targetMonth,
+        ]);
     }
 
     // 勤怠詳細の取得
     public function edit($id)
     {
         $work = $this->findWorkWithRelations($id);
-        $this->ensureOwner($work);
 
-        $isReadonly = $work->isPending();
-
-        // break の作り方を分岐
-        if ($isReadonly) {
-            $breaks = $work->breakTimes;
-        } else {
-            // 編集用には最後に1個空の BreakTime を足す
-            $breaks = $work->breakTimes->isEmpty()
-                ? collect([new \App\Models\BreakTime()])
-                : $work->breakTimes->push(new \App\Models\BreakTime());
+        // 本人・管理者以外からのアクセス禁止
+        if (Auth::id() !== $work->staff_id && !$work->staff->isAdmin()) {
+            abort(403);
         }
-        return view('works.detail', compact('work', 'breaks', 'isReadonly'));
+
+        $application = $work->application;
+
+        $displayWork = $application ? $application->work : $work;
+
+        $isReadonly = $application !== null;
+        $isApproved = $application && $application->approval === 1;
+
+        $breaks = $displayWork->breakTimes->isEmpty()
+            ? collect([new \App\Models\BreakTime()])
+            : $displayWork->breakTimes;
+
+        return view('works.detail', [
+            'work' => $displayWork,
+            'breaks' => $breaks,
+            'isReadonly' => $isReadonly,
+            'fromApplication' => $application ? true : false,
+            'application' => $application,
+            'isApproved' => $isApproved,
+        ]);
     }
 
     // 勤怠詳細の修正
     public function store(Request $request, $id)
     {
         $work = Work::findOrFail($id);
-        $this->ensureOwner($work);
+
+        // 本人以外からのアクセス禁止
+        if (Auth::id() !== $work->staff_id) {
+            abort(403);
+        }
 
         // 承認待ちの場合更新禁止
         if ($work->application) {
@@ -158,7 +145,7 @@ class WorkController extends BaseWorkController
             [
                 'new_clock_in' => $newClockIn,
                 'new_clock_out' => $newClockOut,
-                'new_break_times' => $breaks,
+                'new_break_times' => json_encode($breaks),
                 'reason' => $request->reason,
                 'status' => 'pending',
             ],

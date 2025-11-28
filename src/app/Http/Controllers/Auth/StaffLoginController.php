@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StaffLoginController extends LoginController
 {
@@ -23,6 +24,13 @@ class StaffLoginController extends LoginController
 
     protected function authenticated(Request $request, $user)
     {
+        // スタッフ用ログインフォームから管理者を弾く
+        if ($user->role !== 'staff') {
+            Auth::logout();
+            return back()->withErrors([
+                'email' => 'スタッフアカウントでログインしてください。',
+            ]);
+        }
         // 未認証の場合はメール認証に飛ばす
         if (!$user->hasVerifiedEmail()) {
             return redirect()->route('verification.notice');

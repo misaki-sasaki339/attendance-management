@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Work;
 use Illuminate\Support\Facades\Auth;
+use Carbon\CarbonPeriod;
+use App\Models\Staff;
 
-class WorkController extends Controller
+class BaseWorkController extends Controller
 {
     /**
      * 月次勤怠一覧を取得（管理者/スタッフ共通）
@@ -23,7 +25,7 @@ class WorkController extends Controller
             : Carbon::now();
 
         // Workに紐づく休憩、申請のデータを事前取得 月の勤務データを昇順で並べ替え
-        $query = Work::with(['breakTimes', 'application'])
+        $query = Work::with(['breakTimes', 'application.approval'])
             ->whereMonth('work_date', $targetMonth->month)
             ->whereYear('work_date', $targetMonth->year)
             ->orderBy('work_date', 'asc');
@@ -36,18 +38,38 @@ class WorkController extends Controller
         return $query->get();
     }
 
-    // 本人以外からのアクセスを禁止
-    protected function ensureOwner($work)
-    {
-        if ($work->staff_id != Auth::id()) {
-            abort(403, 'このデータへのアクセス権がありません');
-        }
-    }
-
     // 勤怠に紐づく申請・休憩データを取得
     protected function findWorkWithRelations($id)
     {
-        return Work::with(['application', 'breakTimes'])->findOrFail($id);
+        return Work::with(['application.approval', 'breakTimes'])->findOrFail($id);
     }
 
+    // 月次勤怠の取得
+    protected function getMonthlyAttendance(int $staffId, Carbon $targetMonth)
+    {
+        $works = $this->getMonthlyWorks($staffId, $targetMonth);
+
+        $period = CarbonPeriod::create(
+            $targetMonth->copy()->startOfMonth(),
+            $targetMonth->copy()->endOfMonth(),
+        );
+
+        $days = collect();
+
+        /** @var \Carbon\Carbon $date */
+        foreach ($period as $date) {
+            $work = $works->first(fn($w) => $w->work_date->isSameDay($date));
+
+            if (!$work) {
+                $work = new Work([
+                    'id' => null,
+                    'work_date' => $date->copy(),
+                    'clock_in' => null,
+                    'clock_out' => null,
+                ]);
+            }
+            $days->push($work);
+        }
+        return $days;
+    }
 }

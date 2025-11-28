@@ -27,12 +27,6 @@
 <div class="row">
     <div class="label">備考</div>
     <div class="value">
-        <textarea name="reason" class="reason" >
-        @if(auth()->user()->isAdmin())
-        {{ $work->application->reason ?? '' }}
-        @else
-        {{ old('reason') }}
-        @endif
-        </textarea>
+        <textarea name="reason" class="reason">@if(auth()->user()->isAdmin()){{ $work->application->reason ?? '' }}@else{{ old('reason') }}@endif</textarea>
     </div>
 </div>

@@ -124,9 +124,24 @@ class Work extends Model
             ->firstOrFail();
     }
 
-    // 修正申請中の勤怠を取得
+    // 申請があるかの判定
+    public function hasApplication()
+    {
+        return $this->application !== null;
+    }
+
+    // 申請が承認待ちかの判定
     public function isPending()
     {
-        return $this->application && $this->application->status === 'pending';
+        // approvalレコードが「存在しない」＝承認待ち
+        return $this->application && $this->application->approval === null;
+    }
+
+    // 申請が承認済みかの判定
+    public function isApproved()
+    {
+        // approvalレコードが「存在する」＝承認済み
+        return $this->application && $this->application->approval !== null;
     }
 }
+

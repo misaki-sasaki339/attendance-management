@@ -21,7 +21,6 @@ class Application extends Model
     protected $casts = [
         'new_clock_in' => 'datetime',
         'new_clock_out' => 'datetime',
-        'new_break_times' => 'array',
     ];
 
     // リレーションの定義

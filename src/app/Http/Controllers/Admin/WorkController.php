@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\WorkController as BaseWorkController;
+use App\Http\Controllers\BaseWorkController;
 use Carbon\Carbon;
 use App\Models\Work;
+use App\Models\Staff;
+use Illuminate\Support\Facades\Auth;
 
 class WorkController extends BaseWorkController
 {
@@ -34,26 +36,32 @@ class WorkController extends BaseWorkController
     public function edit($id)
     {
         $work = $this->findWorkWithRelations($id);
-        $isReadonly = $work->isPending();
-        $breaks = $work->breakTimes;
+        $application = $work->application;
 
-    // 修正申請中のときは「閲覧専用画面」に切り替える
-    if ($isReadonly) {
+        // 申請内容がある場合は application.work を優先して表示
+        $displayWork = $application ? $application->work : $work;
+
+        // readonly 判定：申請がある場合は編集不可
+        $isReadonly = $application !== null;
+
+        // 承認済み判定
+        $isApproved = $application && $application->approval === 1;
+
+        // break 一覧：申請内容があれば申請側 breakTimes を使う
+        $breaks = $displayWork->breakTimes;
+
         return view('works.detail', [
-            'work' => $work,
+            'work' => $displayWork,
             'breaks' => $breaks,
             'isReadonly' => $isReadonly,
+            'fromApplication' => $application ? true : false,
+            'application' => $application,
+            'isApproved' => $isApproved,
+            'isAdmin' => true,
         ]);
     }
 
-        // ない場合は編集画面へ
-        return view('works.detail', [
-            'work' => $work,
-            'breaks' => $breaks,
-            'isReadonly' => $isReadonly,
-        ]);
-    }
-    
+    // スタッフの勤怠を直接修正
     public function update(Request $request, $id)
     {
         $work = Work::with('breakTimes')->findOrFail($id);
@@ -73,5 +81,29 @@ class WorkController extends BaseWorkController
             }
         }
         return redirect()->route('admin.edit', $id)->with('success', '勤怠を更新しました');
+    }
+
+    // スタッフ一覧の表示
+    public function staffList()
+    {
+        $staffs = Staff::notAdmin()
+            ->orderBy('id', 'asc')
+            ->get();
+        return view('admin.staff-list', compact('staffs'));
+    }
+
+    // スタッフの勤怠情報(月次)の取得
+    public function staffMonthly(Request $request, $id)
+    {
+        $monthString = $request->input('month');
+        $targetMonth = $monthString ? Carbon::parse($monthString) : now();
+
+        $days = $this->getMonthlyAttendance($id, $targetMonth);
+
+        return view('works.index', [
+            'works' => $days,
+            'month' => $targetMonth,
+            'staff' => Staff::notAdmin()->findOrFail($id),
+        ]);
     }
 }

@@ -47,8 +47,15 @@ class Staff extends Authenticatable implements MustVerifyEmail
         $this->notify(new VerifyEmailNotification());
     }
 
+    // 管理者に適用する処理
     public function isAdmin()
     {
         return $this->role === 'admin';
     }
+
+    // 管理者は除く処理
+    public function scopeNotAdmin($query)
+{
+    return $query->where('role', '!=', 'admin');
+}
 }
