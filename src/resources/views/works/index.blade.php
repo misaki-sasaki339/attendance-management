@@ -6,7 +6,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/staff/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/works/index.css') }}">
 @endsection
 
 @section('content')
@@ -70,6 +70,10 @@
         </tr>
         @endforeach
     </table>
+
+    @if (auth()->user()->isAdmin())
+        <a href="{{ route('admin.staffMonthly.csv', ['id' => $staff->id, 'month' => $month->format('Y-m')]) }}">CSV出力</a>
+    @endif
 </div>
 @endsection
 

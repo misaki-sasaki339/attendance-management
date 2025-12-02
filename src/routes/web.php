@@ -22,6 +22,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
     Route::put('/attendance/{id}', [AdminWorkController::class, 'update'])->name('update');
     Route::get('/staff/list', [AdminWorkController::class, 'staffList'])->name('staffList');
     Route::get('/attendance/staff/{id}', [AdminWorkController::class, 'staffMonthly'])->name('staffMonthly');
+    Route::get('/attendance/staff/{id}/csv', [AdminWorkController::class, 'exportMonthly'])->name('staffMonthly.csv');
 
     // 管理者の修正申請一覧・承認
     Route::name('application.')
@@ -52,7 +53,7 @@ Route::middleware(['auth', 'verified', 'role:staff'])
         Route::post('/break-end', [StaffWorkController::class, 'breakEnd'])->name('breakEnd');
         Route::get('/list', [StaffWorkController::class, 'index'])->name('index');
         Route::get('/detail/{id}', [StaffWorkController::class,'edit'])->name('edit');
-        Route::post('/detail/{id}', [StaffWorkController::class, 'store'])->name('store');
+        Route::post('/detail/{id}', [StaffApplicationController::class, 'store'])->name('application.store');
     });
 
 // スタッフの申請一覧
@@ -71,3 +72,4 @@ Route::post('/logout', function () {
         ? redirect()->route('admin.login')
         : redirect()->route('staff.login');
 })->name('logout');
+

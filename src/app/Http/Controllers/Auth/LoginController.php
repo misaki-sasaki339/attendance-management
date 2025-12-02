@@ -40,6 +40,6 @@ class LoginController extends Controller
     // ログイン後の処理
     protected function authenticated(Request $request, $user)
     {
-        return redirect()->intended('/');
+        return redirect()->intended('/')->with('flash_message', 'ログインしました')->with('flash_type', 'success');
     }
 }

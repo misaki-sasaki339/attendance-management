@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/staff/detail.css') }}">
+<link rel="stylesheet" href="{{ asset('css/works/detail.css') }}">
 @endsection
 
 @section('content')
@@ -40,7 +40,7 @@
          ★ スタッフ：修正申請前のみ入力可
          ================================ --}}
     @if (!$work->hasApplication() && !auth()->user()->isAdmin())
-        <form method="POST" action="{{ route('attendance.store', $work->id ) }}">
+        <form method="POST" action="{{ route('application.store', $work->id ) }}">
             @csrf
             <input type="hidden" name="work_id" value="{{ $work->id }}">
             @include('works.partials._works_fields', ['work' => $work, 'breaks' => $breaks])

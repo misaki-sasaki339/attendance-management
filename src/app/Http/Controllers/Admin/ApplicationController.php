@@ -65,6 +65,6 @@ class ApplicationController extends BaseApplicationController
                 ]);
             }
         }
-        return redirect()->route('admin.application.index')->with('message', '申請を承認しました');
+        return redirect()->route('admin.application.index')->with('flash_message', '申請を承認しました')->with('flash_type', 'success');
     }
 }

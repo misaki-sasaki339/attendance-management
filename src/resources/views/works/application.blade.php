@@ -42,9 +42,9 @@
         <tr>
             <td>{{ $app->approval ? '承認済み' : '承認待ち' }}</td>
             <td>{{ $app->work->staff->name }}</td>
-            <td>{{ $app->work->work_date }}</td>
+            <td>{{ $app->work->work_date->format('Y/m/d') }}</td>
             <td>{{ $app->reason}}</td>
-            <td>{{ $app->created_at}}</td>
+            <td>{{ $app->created_at->format('Y/m/d') }}</td>
             <td>
                 @if (auth()->user()->isAdmin())
                 <a href="{{ route('admin.application.show', $app->id) }}">詳細</a>

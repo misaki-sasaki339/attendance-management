@@ -19,6 +19,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Event;
 use App\Models\Staff;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Laravel\Fortify\Contracts\VerifyEmailResponse;
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -49,6 +50,15 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        app()->singleton(VerifyEmailResponse::class, function () {
+            return new class implements VerifyEmailResponse {
+                public function toResponse($request)
+                {
+                    return redirect()->route('attendance.today');
+                }
+            };
         });
     }
 }

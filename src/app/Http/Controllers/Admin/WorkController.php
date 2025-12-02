@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\Models\Work;
 use App\Models\Staff;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Http\Requests\WorkRequest;
 
 class WorkController extends BaseWorkController
 {
@@ -62,7 +64,7 @@ class WorkController extends BaseWorkController
     }
 
     // スタッフの勤怠を直接修正
-    public function update(Request $request, $id)
+    public function update(WorkRequest $request, $id)
     {
         $work = Work::with('breakTimes')->findOrFail($id);
 
@@ -80,7 +82,7 @@ class WorkController extends BaseWorkController
                 ]);
             }
         }
-        return redirect()->route('admin.edit', $id)->with('success', '勤怠を更新しました');
+        return redirect()->route('admin.edit', $id)->with('flash_message', '勤怠情報を修正しました')->with('flash_type', 'success');;
     }
 
     // スタッフ一覧の表示
@@ -105,5 +107,44 @@ class WorkController extends BaseWorkController
             'month' => $targetMonth,
             'staff' => Staff::notAdmin()->findOrFail($id),
         ]);
+    }
+
+    // スタッフの月次勤怠をCSVエクスポート
+    public function exportMonthly(Request $request, $staffId)
+    {
+        $month = $request->input('month');
+        $targetMonth = $month ? Carbon::parse($month) : now();
+
+        $days = $this->getMonthlyAttendance($staffId, $targetMonth);
+
+        $response = new StreamedResponse(function() use ($days) {
+            $handle = fopen('php://output', 'w');
+
+            fputcsv($handle, ['日付','出勤', '退勤', '休憩', '合計']);
+
+            foreach ($days as $day) {
+
+                $noWork = is_null($day->clock_in) && is_null($day->clock_out);
+
+                fputcsv($handle, [
+                    $day->work_date,
+                    $noWork ? '' : $day->clock_in,
+                    $noWork ? '' : $day->clock_out,
+                    $noWork ? '' : $day->break_time,
+                    $noWork ? '' : $day->work_time,
+                ]);
+            }
+            fclose($handle);
+        });
+
+        $staff = Staff::findOrFail($staffId);
+        $fileName = "{$staff->name}_{$targetMonth->format('Y年m月')}度勤怠一覧.csv";
+        $response->headers->set('cContent-Type', 'text/csv');
+        $response->headers->set(
+            'Content-Disposition',
+            "attachment; filename=\"{$fileName}\""
+        );
+
+        return $response;
     }
 }

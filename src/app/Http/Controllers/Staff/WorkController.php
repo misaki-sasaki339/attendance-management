@@ -101,58 +101,5 @@ class WorkController extends BaseWorkController
             'isApproved' => $isApproved,
         ]);
     }
-
-    // 勤怠詳細の修正
-    public function store(Request $request, $id)
-    {
-        $work = Work::findOrFail($id);
-
-        // 本人以外からのアクセス禁止
-        if (Auth::id() !== $work->staff_id) {
-            abort(403);
-        }
-
-        // 承認待ちの場合更新禁止
-        if ($work->application) {
-            return back()->with('message', '※承認待ちのため修正はできません。');
-        }
-
-        // 出勤・退勤時間をCarbonに変換
-        $newClockIn = $request->clock_in
-            ? Carbon::parse($work->work_date->format('Y-m-d') . ' ' . $request->clock_in)
-            : null;
-
-        $newClockOut = $request->clock_out
-            ? Carbon::parse($work->work_date->format('Y-m-d') . ' ' . $request->clock_out)
-            : null;
-
-        // 休憩をJSON型に整形
-        $breaks = [];
-        if($request->break_start) {
-            foreach ($request->break_start as $i => $start) {
-                $end = $request->break_end[$i] ?? null;
-
-                if ($start || $end) {
-                    $breaks[] = [
-                        'start' => $start,
-                        'end' => $end,
-                    ];
-                }
-            }
-        }
-        $application = Application::updateOrCreate(
-            ['work_id'=> $work->id],
-            [
-                'new_clock_in' => $newClockIn,
-                'new_clock_out' => $newClockOut,
-                'new_break_times' => json_encode($breaks),
-                'reason' => $request->reason,
-                'status' => 'pending',
-            ],
-        );
-
-        return redirect()->route('attendance.edit', $work->id)->with('message', '修正申請を送信しました');
-
-    }
 }
 
