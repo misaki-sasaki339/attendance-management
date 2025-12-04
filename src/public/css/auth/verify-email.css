@@ -1,0 +1,40 @@
+.verify-email__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 54px);
+}
+
+.message {
+    margin-top: 0px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 56px;
+}
+
+.form__button-submit {
+    display: flex;
+    background-color: #D9D9D9;
+    color: #000000;
+    text-decoration: none;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    height: 48px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-bottom: 56px;
+}
+
+.form__link{
+    all: unset;
+    cursor: pointer;
+    color: #0073CC;
+    font-size: 16px;
+}

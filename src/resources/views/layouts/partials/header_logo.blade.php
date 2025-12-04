@@ -1,5 +1,5 @@
-<header class="header-logo">
+<div class="header-logo__img">
     <a href="{{ url('/') }}">
-        <img src="{{ asset('img/logo.png') }}" alt="COATCHTECHロゴ">
+        <img class="header-logo__img" src="{{ asset('img/logo.png') }}" alt="COATCHTECHロゴ">
     </a>
-</header>
+</div>

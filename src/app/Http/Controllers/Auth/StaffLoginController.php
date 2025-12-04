@@ -12,14 +12,25 @@ class StaffLoginController extends LoginController
     protected string $route = 'staff.login';
     protected string $role = 'staff';
 
-    public function showLoginForm()
+    /**
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
     {
-        return view('auth.login', [
-            'title' => $this->title,
-            'buttonLabel' => $this->buttonLabel,
-            'route' => $this->route,
-            'role' => $this->role,
-        ]);
+        return Auth::guard($this->role);
+    }
+
+    protected function username()
+    {
+        return 'email';
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attempt(
+            $request->only($this->username(), 'password'),
+            $request->filled('remember')
+        );
     }
 
     protected function authenticated(Request $request, $user)
@@ -35,6 +46,6 @@ class StaffLoginController extends LoginController
         if (!$user->hasVerifiedEmail()) {
             return redirect()->route('verification.notice');
         }
-        return redirect()->route('attendance.index');
+        return redirect()->route('attendance.today');
     }
 }

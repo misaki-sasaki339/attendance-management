@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+
+
+h2 {
+    font-size: 32px;
+    margin: 56px 0;
+}
+
+form.form {
+    width: 560px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.form__input {
+    height: 40px;
+    font-size: 16px;
+    border: 1px solid;
+    border-radius: 3px;
+}
+
+button {
+    background: #000000;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    height: 40px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    margin: 32px 0;
+    cursor: pointer;
+}
+
+p.link {
+    margin: 0;
+}
+
+.auth-link {
+    color: #0073CC;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+

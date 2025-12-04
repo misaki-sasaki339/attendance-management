@@ -30,8 +30,8 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            return $this->authenticated($request, Auth::user());
+        if (Auth::guard($this->role)->attempt($credentials)) {
+            return $this->authenticated($request, Auth::guard($this->role)->user());
         }
 
         return back()->withErrors(['email' => 'ログイン情報が登録されていません']);
@@ -41,5 +41,10 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         return redirect()->intended('/')->with('flash_message', 'ログインしました')->with('flash_type', 'success');
+    }
+
+    protected function guard()
+    {
+        return Auth::guard($this->role);
     }
 }

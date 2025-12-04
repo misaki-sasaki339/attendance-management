@@ -5,16 +5,16 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="attendance-container">
+
+    @if ($todayWork)
+        <div class="work-status">{{ $todayWork->status }}</div>
 
     <div class="attendance-date">
         {{ now()->format('Y年m月d日') }}
         ({{ ['日','月','火','水','木','金','土'][now()->dayOfWeek] }})
     </div>
     <div id="current-time" class="attendance-time"></div>
-
-    @if ($todayWork)
-        <div class="work-status">{{ $todayWork->status }}</div>
 
         @if ($todayWork->status === '勤務外')
             @include('staff.buttons.not_working')
@@ -41,10 +41,9 @@
 
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
 
         document.getElementById('current-time').textContent =
-            `${hours}:${minutes}:${seconds}`;
+            `${hours}:${minutes}`;
     }
 
     // 1秒ごとに更新

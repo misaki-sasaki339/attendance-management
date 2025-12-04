@@ -20,6 +20,15 @@ class WorkController extends BaseWorkController
             ->whereDate('work_date', today())
             ->with('breakTimes')
             ->first();
+
+        // 今日の勤怠レコードがない場合
+        if (!$todayWork) {
+            $todayWork = new Work([
+                'work_date' => today(),
+                'clock_in' => null,
+                'clock_out' => null,
+            ]);
+        }
         return view('staff.attendance', compact('todayWork'));
     }
 

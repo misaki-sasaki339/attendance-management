@@ -1,0 +1,59 @@
+body {
+    min-width: 1400px;
+    max-width: 1540px;
+    margin: 0 auto;
+    font-family: "Inter", sans-serif;
+}
+
+.header {
+    background-color: #000000;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-logo__img {
+    border-style: none;
+    width: 250px;
+    align-items: center;
+    margin-left: 16px;
+}
+
+.nav-staff{
+    margin-right: 16px;
+
+}
+
+ul {
+    display: flex;
+    gap: 32px;
+}
+
+.header-nav,
+.header-nav:visited,
+.header-nav:hover,
+.header-nav:active {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+
+
+.logout-btn {
+    all: unset;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error-message {
+    color: red;
+    margin: 8px 0 0;
+    font-size: 14px;
+}

@@ -42,7 +42,7 @@ Route::get('/login',[StaffLoginController::class, 'showLoginForm'])->name('staff
 Route::post('/login',[StaffLoginController::class, 'login']);
 
 // スタッフの打刻・勤怠一覧・勤怠詳細・修正申請
-Route::middleware(['auth', 'verified', 'role:staff'])
+Route::middleware(['auth:staff', 'verified', 'role:staff'])
     ->prefix('attendance')
     ->name('attendance.')
     ->group(function() {
