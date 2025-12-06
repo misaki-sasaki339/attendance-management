@@ -30,11 +30,13 @@ h2::before {
     border-radius: 2px;
 }
 
-.work-form  {
+.work-form,
+.application-table {
     width: 100%;
 }
 
-.edit-table {
+.edit-table,
+.application-table {
     background-color: #FFFFFF;
     border-radius: 8px;
 }
@@ -143,7 +145,18 @@ textarea {
     margin-top: 32px;
 }
 
-
+.approved-button{
+    background-color: #696969;
+    color: #FFFFFF;
+    font-size: 22px;
+    border: none;
+    border-radius: 4px;
+    height: 48px;
+    width: 120px;
+    display: block;
+    margin-top: 32px;
+    letter-spacing: 2px;
+}
 
 /* 時間入力の時計マーク消す */
 .input__time {
@@ -156,3 +169,16 @@ textarea {
 .input__time::-webkit-inner-spin-button {
     display: none !important;
 }
+
+.message-container {
+    width: 100%;
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.readonly-message {
+    color: #FF0000;
+}
+
+

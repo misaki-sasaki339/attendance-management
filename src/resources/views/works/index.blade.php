@@ -77,7 +77,9 @@
         </table>
 
         @if (auth()->user()->isAdmin())
+        <div class="button-container">
             <a class="csv-button" href="{{ route('admin.staffMonthly.csv', ['id' => $staff->id, 'month' => $month->format('Y-m')]) }}">CSV出力</a>
+        </div>
         @endif
     </div>
 </div>

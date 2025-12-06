@@ -118,10 +118,20 @@ class Work extends Model
     // 当日の勤怠データを取得
     public static function todayWork()
     {
-        return static::where('staff_id', Auth::id())
+        $work = static::where('staff_id', Auth::id())
             ->whereDate('work_date', today())
             ->with('breakTimes')
-            ->firstOrFail();
+            ->first();
+
+        if (!$work) {
+            $work = static::create([
+                'staff_id' => Auth::id(),
+                'work_date' => today(),
+                'clock_in' => null,
+                'clock_out' => null,
+            ]);
+        }
+        return $work;
     }
 
     // 申請があるかの判定

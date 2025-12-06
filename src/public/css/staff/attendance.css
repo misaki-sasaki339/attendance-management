@@ -49,3 +49,19 @@
     color: #FFFFFF;
     background-color: #000000;
 }
+
+.button-wrapper {
+    display: flex;
+    gap: 80px;
+}
+
+.attendance-button--break-start,
+.attendance-button--break-end {
+    background-color: #FFFFFF;
+}
+
+.finish-message {
+    margin: 0;
+    font-weight: bold;
+    font-size: 24px;
+}

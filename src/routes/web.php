@@ -10,12 +10,14 @@ use App\Http\Controllers\Admin\ApplicationController as AdminApplicationControll
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 use Illuminate\Support\Facades\Auth;
 
-// 管理者ルート
-Route::prefix('admin')->name('admin.')->group(function() {
-    // ログイン機能
+// 管理者ログイン
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login',[AdminLoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login',[AdminLoginController::class, 'login']);
+});
 
+// 管理者ルート
+Route::prefix('admin')->middleware(['auth:admin','verified','role:admin'])->name('admin.')->group(function() {
     // 管理者のスタッフ勤怠確認・更新、スタッフリスト閲覧
     Route::get('/list', [AdminWorkController::class, 'index'])->name('index');
     Route::get('/attendance/{id}', [AdminWorkController::class, 'edit'])->name('edit');
@@ -57,7 +59,7 @@ Route::middleware(['auth:staff', 'verified', 'role:staff'])
     });
 
 // スタッフの申請一覧
-Route::middleware(['auth', 'verified', 'role:staff'])
+Route::middleware(['auth:staff', 'verified', 'role:staff'])
     ->name('staff.application.')
     ->group(function() {
         Route::get('/stamp_correction_request/list', [StaffApplicationController::class, 'index'])->name('index');
@@ -72,4 +74,3 @@ Route::post('/logout', function () {
         ? redirect()->route('admin.login')
         : redirect()->route('staff.login');
 })->name('logout');
-

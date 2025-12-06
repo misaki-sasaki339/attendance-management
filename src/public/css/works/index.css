@@ -13,6 +13,15 @@
     padding-bottom: 80px;
 }
 
+.index-container__admin {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 54px);
+    margin: 0 auto;
+    width: 800px;
+    padding-bottom: 80px;
+}
+
 h2 {
     margin-top: 64px;
     display: flex;
@@ -31,7 +40,8 @@ h2::before {
     border-radius: 2px;
 }
 
-.month-selector {
+.month-selector,
+.date-selector {
     width: 100%;
     background-color: #FFFFFF;
     border-radius: 8px;
@@ -69,7 +79,8 @@ h2::before {
     font-size: 16px;
 }
 
-.current-month {
+.current-month,
+.today {
     font-weight: bold;
     font-size: 16px;
 }
@@ -96,12 +107,11 @@ td {
     letter-spacing: 2px;
     border-bottom: 2px solid #F0EFF2;
     text-align: center;
-
 }
 
 .attendance-table th:nth-child(1),
 .attendance-table td:nth-child(1) {
-    width: 120px; /* 日付列 */
+    width: 120px;
 }
 
 .attendance-table th:nth-child(2),
@@ -117,7 +127,7 @@ td {
 
 .attendance-table th:nth-child(6),
 .attendance-table td:nth-child(6) {
-    width: 60px; /* 詳細 */
+    width: 60px;
     text-align: center;
 }
 
@@ -126,6 +136,23 @@ td {
     color: #000000;
 }
 
-.csv-button{
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 
+.csv-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-size: 22px;
+    letter-spacing: 3px;
+    border-radius: 4px;
+    height: 48px;
+    width: 180px;
+    margin-top: 32px;
 }

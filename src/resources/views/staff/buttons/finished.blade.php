@@ -1,1 +1,1 @@
-<p>お疲れ様でした。</p>
+<p class="finish-message">お疲れ様でした。</p>

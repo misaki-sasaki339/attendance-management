@@ -1,0 +1,129 @@
+.application-wrapper{
+    background-color: #F0EFF2;
+}
+
+.application-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 54px);
+    margin: 0 auto;
+    width: 800px;
+    padding-bottom: 80px;
+}
+
+h2 {
+    margin-top: 64px;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    gap: 10px;
+    margin-right: auto;
+    margin-bottom: 40px;
+}
+
+h2::before {
+    content: "";
+    width: 5px;
+    height: 30px;
+    background-color: #000000;
+    border-radius: 2px;
+}
+
+.tabs{
+    width: 100%;
+    border-bottom: 2px solid #000000;
+}
+
+.tab__list  {
+    gap: 80px
+}
+
+.tabs li {
+    list-style: none;
+}
+
+.tab-link {
+    color: #A0A0A0;
+    font-weight: bold;
+    padding-bottom: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.tab-link.active {
+    color: #000000;
+}
+
+.application-table{
+    margin-top: 40px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.application-table th {
+    height: 48px;
+    color: #737373;
+    font-weight: bold;
+    border-bottom: 3px solid #F0EFF2;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 2px;
+}
+
+.application-table td {
+    height: 48px;
+    color: #737373;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #F0EFF2;
+    text-align: center;
+    font-size: 15px;
+}
+
+.application-table td:first-child,
+.application-table th:first-child {
+    padding-left: 24px;
+    width: 15%;
+}
+
+.application-table th:nth-child(2),
+.application-table td:nth-child(2) {
+    width: 17%;
+}
+
+.application-table th:nth-child(3),
+.application-table td:nth-child(3) {
+    width: 17%;
+}
+
+.application-table th:nth-child(4),
+.application-table td:nth-child(4) {
+    width: 17%;
+}
+
+.application-table th:nth-child(5),
+.application-table td:nth-child(5) {
+    width: 17%;
+}
+
+.application-table th:nth-child(6),
+.application-table td:nth-child(6) {
+    width: 17%;
+    padding-right: 24px;
+}
+
+.application-table td:nth-child(4) {
+    text-align: left;
+    padding: 8px;
+}
+
+.application-detail {
+    text-decoration: none;
+    color: #000000;
+    font-size: 15px;
+    letter-spacing: 2px;
+}

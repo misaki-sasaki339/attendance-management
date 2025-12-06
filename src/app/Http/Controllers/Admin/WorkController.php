@@ -82,7 +82,7 @@ class WorkController extends BaseWorkController
                 ]);
             }
         }
-        return redirect()->route('admin.edit', $id)->with('flash_message', '勤怠情報を修正しました')->with('flash_type', 'success');;
+        return redirect()->route('admin.index')->with('flash_message', '勤怠情報を修正しました')->with('flash_type', 'success');;
     }
 
     // スタッフ一覧の表示
@@ -123,15 +123,29 @@ class WorkController extends BaseWorkController
             fputcsv($handle, ['日付','出勤', '退勤', '休憩', '合計']);
 
             foreach ($days as $day) {
-
                 $noWork = is_null($day->clock_in) && is_null($day->clock_out);
 
+                $workDate = $day->work_date
+                    ? Carbon::parse($day->work_date)->format('Y-m-d')
+                    : '';
+
+                $clockIn = (!$noWork && $day->clock_in)
+                    ? Carbon::parse($day->clock_in)->format('H:i')
+                    : '';
+
+                $clockOut = (!$noWork && $day->clock_out)
+                    ? Carbon::parse($day->clock_out)->format('H:i')
+                    : '';
+
+                $break = $noWork ? '' : ($day->break_time ?? '');
+                $total = $noWork ? '' : ($day->work_time ?? '');
+
                 fputcsv($handle, [
-                    $day->work_date,
-                    $noWork ? '' : $day->clock_in,
-                    $noWork ? '' : $day->clock_out,
-                    $noWork ? '' : $day->break_time,
-                    $noWork ? '' : $day->work_time,
+                    $workDate,
+                    $clockIn,
+                    $clockOut,
+                    $break,
+                    $total,
                 ]);
             }
             fclose($handle);

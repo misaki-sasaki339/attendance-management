@@ -21,7 +21,7 @@ body {
 }
 
 .nav-staff{
-    margin-right: 16px;
+    margin-right: 32px;
 
 }
 
@@ -44,6 +44,7 @@ ul {
     all: unset;
     font-size: 16px;
     color: #FFFFFF;
+    margin-right: 32px;
 }
 
 .container {
@@ -56,4 +57,47 @@ ul {
     color: red;
     margin: 8px 0 0;
     font-size: 14px;
+}
+
+
+.flash-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    min-width: 240px;
+    max-width: 320px;
+    background: #3b8ed8;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.3s ease-out forwards, fadeOut 0.5s ease 3s forwards;
+    z-index: 10000;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+.flash-success {
+    background-color: #3b8ed8;
+}
+
+.flash-error {
+    background-color: #f27474;
+    color: #fff;
 }

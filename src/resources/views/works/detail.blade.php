@@ -23,7 +23,9 @@
         @if ($work->isPending() && auth()->user()->isAdmin() && $fromApplication)
             <form class="work-form" method="POST" action="{{ route('admin.application.approve', ['id' => $application->id]) }}">
                 @csrf
-                <button class="submit-btn">承認</button>
+                <div class="button-container">
+                    <button class="modify-button" type="submit">承認</button>
+                </div>
             </form>
         @endif
 

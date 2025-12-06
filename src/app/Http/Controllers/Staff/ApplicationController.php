@@ -61,7 +61,7 @@ class ApplicationController extends BaseApplicationController
             ],
         );
 
-        return redirect()->route('attendance.edit', $work->id)->with('flash_message', '修正申請を送信しましあt')->with('flash_type', 'success');
+        return redirect()->route('attendance.index')->with('flash_message', '修正申請を送信しました')->with('flash_type', 'success');
 
     }
 
