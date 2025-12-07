@@ -47,6 +47,11 @@ class ApplicationController extends BaseApplicationController
             'approved_at' => now(),
         ]);
 
+        // Applicationsテーブルのstatus更新
+        $application->update([
+            'status' => 'approved',
+        ]);
+
         // workへ申請内容反映
         $work->update([
             'clock_in' => $application->new_clock_in ?? $work->clock_in,

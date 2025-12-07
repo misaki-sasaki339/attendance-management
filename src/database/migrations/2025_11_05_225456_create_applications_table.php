@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('new_clock_out')->nullable();
             $table->json('new_break_times')->nullable();
             $table->string('reason');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }
