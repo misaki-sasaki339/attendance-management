@@ -16,19 +16,8 @@ class WorkController extends BaseWorkController
     // 打刻画面の表示
     public function today()
     {
-        $todayWork = Work::where('staff_id', Auth::id())
-            ->whereDate('work_date', today())
-            ->with('breakTimes')
-            ->first();
+        $todayWork = Work::todayWork();
 
-        // 今日の勤怠レコードがない場合
-        if (!$todayWork) {
-            $todayWork = new Work([
-                'work_date' => today(),
-                'clock_in' => null,
-                'clock_out' => null,
-            ]);
-        }
         return view('staff.attendance', compact('todayWork'));
     }
 
@@ -37,7 +26,7 @@ class WorkController extends BaseWorkController
     {
         $work = Work::todayWork();
         $work->clockIn();
-        return back();
+        return redirect()->route('attendance.today');
     }
 
     // 退勤打刻
@@ -45,7 +34,7 @@ class WorkController extends BaseWorkController
     {
         $work = Work::todayWork();
         $work->clockOut();
-        return back();
+        return redirect()->route('attendance.today');
     }
 
     // 休憩入打刻
@@ -53,7 +42,7 @@ class WorkController extends BaseWorkController
     {
         $work = Work::todayWork();
         $work->breakTimes()->create(['break_start' => now()]);
-        return back();
+        return redirect()->route('attendance.today');
     }
 
     // 休憩終了打刻
@@ -62,7 +51,7 @@ class WorkController extends BaseWorkController
         $work = Work::todayWork();
         $break = $work->breakTimes()->whereNull('break_end')->latest()->firstOrFail();
         $break->update(['break_end' => now()]);
-        return back();
+        return redirect()->route('attendance.today');
     }
 
     // 勤怠情報(月次)の取得

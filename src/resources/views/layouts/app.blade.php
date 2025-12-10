@@ -26,7 +26,7 @@
         {{-- ログイン済みユーザーのナビ切り替え --}}
         @if (auth()->check() && auth()->user()->isAdmin())
             @include('layouts.partials.header_admin')
-        @else
+        @elseif(auth('staff')->check())
             @include('layouts.partials.header_staff')
         @endif
     @endif

@@ -136,6 +136,10 @@ td {
     color: #000000;
 }
 
+.work-detail-readonly{
+    color: #737373;
+}
+
 .button-container {
     width: 100%;
     display: flex;

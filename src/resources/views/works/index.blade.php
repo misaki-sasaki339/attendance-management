@@ -70,7 +70,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td class="work-detail-readonly">詳細</td>
                 @endif
             </tr>
             @endforeach
