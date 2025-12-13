@@ -254,6 +254,7 @@ class StaffWorkTest extends TestCase
         $afterResponse->assertSee('出勤中');
     }
 
+    // 休憩は一日に何回も取得できる
     public function test_staff_can_end_break_multiple_times()
     {
         $this->actingAs($this->staff, 'staff');
@@ -313,11 +314,13 @@ class StaffWorkTest extends TestCase
         $response = $this->get('/attendance/list?month=2025-12');
         $week = ['日','月','火','水','木','金','土'][$targetDate->dayOfWeek];
 
+        $expectedBreakTotal = $work->fresh()->break_total;
+
         $response->assertSeeInOrder([
-            '12/09',
+            $targetDate->format('m/d'),
             $week,
-            '09:00',
-            '1:00'
+            $work->clock_in->format('H:i'),
+            $expectedBreakTotal,
         ]);
 
         Carbon::setTestNow();
@@ -501,7 +504,7 @@ class StaffWorkTest extends TestCase
     }
 
     // 「翌月」を押した時に表示月の翌月の情報が表示される
-    public function test_attendance_list_shows_only_current_month_records()
+    public function test_attendance_list_shows_only_next_month_records()
     {
         $this->actingAs($this->staff, 'staff');
 

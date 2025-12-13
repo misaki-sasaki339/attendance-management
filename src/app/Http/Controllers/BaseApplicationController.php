@@ -57,7 +57,7 @@ class BaseApplicationController extends Controller
             'application'      => $application,
             'work'             => $application->work,
             'breaks'           => $application->work->breakTimes,
-            'requestedBreaks'  => json_decode($application->new_break_times, true),
+            'requestedBreaks'  => json_decode($application->new_break_times, true) ?? [],
         ];
     }
 }

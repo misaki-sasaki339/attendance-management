@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Staff;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Staff>
@@ -18,5 +19,14 @@ class StaffFactory extends Factory
             'email' => $this->faker->safeEmail(),
             'password' => bcrypt('password123'),
         ];
+    }
+
+    public function unverified()
+    {
+        return $this->state(function () {
+            return [
+                'email_verified_at' => null,
+            ];
+        });
     }
 }

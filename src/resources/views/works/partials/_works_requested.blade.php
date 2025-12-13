@@ -20,8 +20,9 @@
     </div>
 
     @php
-        $requestedBreaks = json_decode($application->new_break_times, true);
+        $requestedBreaks = json_decode($application->new_break_times, true) ?? [];
     @endphp
+
     @forelse ($requestedBreaks as $i => $break)
         <div class="row">
             <div class="label">休憩{{ $i + 1 }}</div>

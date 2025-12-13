@@ -31,6 +31,7 @@ class ApplicationController extends BaseApplicationController
             'fromApplication' => true,
             'isAdmin' => true,
             'isApproved' => $application && $application->approval === 1,
+            'breaks' => $data['breaks'] ?? $application->work->breakTimes,
         ]));
     }
 
