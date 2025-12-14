@@ -22,6 +22,7 @@
         {{-- 認証系の画面ではナビを表示しない --}}
         @if (request()->routeIs('register') ||
                 request()->routeIs('password.*') ||
+                request()->routeIs('verification.*') ||
                 request()->routeIs('staff.login') ||
                 request()->routeIs('admin.login'))
             {{-- 何も表示しない --}}

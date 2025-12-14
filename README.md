@@ -11,6 +11,9 @@ Webアプリ開発の学習過程で制作した勤怠管理アプリです。<b
 管理者ユーザーはログイン後、スタッフ一覧を確認でき、スタッフごとの月次勤怠をCSVで出力可能です。<br />
 スタッフの日次勤怠を直接修正できるだけでなく、スタッフからの修正申請を承認することができます。<br />
 
+本アプリでは Laravel デフォルトの User モデルは使用せず、<br />
+Staff モデルを用いて認証・権限管理を行っています。
+
 ---
 
 ## 使用技術
@@ -86,6 +89,17 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 ---
 
+## キュー設定について
+
+本アプリでは、ローカル環境での再現性を高めるため  
+`.env` の `QUEUE_CONNECTION` を以下のように設定することを推奨しています。
+
+```env
+QUEUE_CONNECTION=sync
+```
+
+---
+
 ## MailHogの設定
 
 本アプリではメール認証(Fortify)を使用しています。
@@ -96,6 +110,51 @@ MailHogはdocker-compose.ymlに含まれています。
 
 http://localhost:8025
 
+
+※ ローカル環境で MailHog を使用した場合、
+認証メールが複数表示されることがありますが、
+テストおよびアプリ動作には影響ありません。
+
+---
+
+## テストアカウント
+
+一般ユーザー
+name:テストスタッフ
+email:staff@example.com
+password:password123
+-------------------------
+管理者
+name:管理者
+email:admin@example.com
+password:password123
+
 ---
 
 ## テストの実施
+
+下記コマンドを実行してください。
+
+```bash
+//テスト用データベースの作成
+docker compose exec mysql bash
+mysql -u root -p
+//パスワードはrootと入力
+create database demo_test;
+
+docker compose exec php bash
+php artisan migrate:fresh --env=testing
+./vendor/bin/phpunit
+```
+
+---
+## 採点者の方へご連絡
+
+テストケースID:6,7,8ですが、機能要件と異なっている箇所があり、
+コーチにご相談の上機能要件を正としてテストを行っております。
+詳細はスプレッドシートのテストケース一覧にコメント挿入しておりますので、
+お手数をおかけしますがご確認くださいますようお願いたします。
+
+
+
+

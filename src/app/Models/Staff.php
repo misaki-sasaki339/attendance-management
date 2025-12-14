@@ -36,11 +36,6 @@ class Staff extends Authenticatable implements MustVerifyEmail
     // メール認証イベントの発火
     public function sendEmailVerificationNotification()
     {
-        static $sent = false;
-        if ($sent) {
-            return;
-        }
-        $sent = true;
         $this->notify(new VerifyEmailNotification());
     }
 
