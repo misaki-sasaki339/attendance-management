@@ -65,7 +65,7 @@ php artisan db:seed
 ```
 APP_NAME=Laravel
 APP_ENV=local
-APP_KEY=base64:xxxxx
+APP_KEY=xxxxxxxxxx
 APP_DEBUG=true
 APP_URL=http://localhost
 
@@ -75,6 +75,7 @@ DB_PORT=3306
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
+QUEUE_CONNECTION=sync
 
 MAIL_MAILER=smtp
 MAIL_HOST=mailhog
@@ -143,11 +144,13 @@ mysql -u root -p
 create database demo_test;
 
 docker compose exec php bash
+php artisan key:generate --env=testing
 php artisan migrate:fresh --env=testing
 ./vendor/bin/phpunit
 ```
 
 ---
+
 ## 採点者の方へご連絡
 
 テストケースID:6,7,8ですが、機能要件と異なっている箇所があり、
