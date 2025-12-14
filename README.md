@@ -30,7 +30,7 @@ Staff モデルを用いて認証・権限管理を行っています。
 
 ## ER図
 
-![ER図](src/docs/勤怠管理アプリ.png)
+![ER図](src/docs/勤怠管理アプリ.svg)
 
 ---
 
@@ -119,14 +119,14 @@ http://localhost:8025
 
 ## テストアカウント
 
-一般ユーザー
-name:テストスタッフ
-email:staff@example.com
-password:password123
--------------------------
-管理者
-name:管理者
-email:admin@example.com
+一般ユーザー<br />
+name:テストスタッフ<br />
+email:staff@example.com<br />
+password:password123<br />
+
+管理者<br />
+name:管理者<br />
+email:admin@example.com<br />
 password:password123
 
 ---
