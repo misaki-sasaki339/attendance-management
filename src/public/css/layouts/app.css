@@ -20,9 +20,8 @@ body {
     margin-left: 16px;
 }
 
-.nav-staff{
+.nav-staff {
     margin-right: 32px;
-
 }
 
 ul {
@@ -34,16 +33,14 @@ ul {
 .header-nav:visited,
 .header-nav:hover,
 .header-nav:active {
-    color: #FFFFFF;
+    color: #ffffff;
     text-decoration: none;
 }
-
-
 
 .logout-btn {
     all: unset;
     font-size: 16px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin-right: 32px;
 }
 
@@ -56,9 +53,9 @@ ul {
 .error-message {
     color: red;
     margin: 8px 0 0;
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: normal;
 }
-
 
 .flash-message {
     position: fixed;

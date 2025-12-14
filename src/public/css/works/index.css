@@ -1,5 +1,5 @@
-.index-wrapper{
-    background-color: #F0EFF2;
+.index-wrapper {
+    background-color: #f0eff2;
 }
 
 .index-container {
@@ -43,7 +43,7 @@ h2::before {
 .month-selector,
 .date-selector {
     width: 100%;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
@@ -53,12 +53,12 @@ h2::before {
     margin-bottom: 40px;
 }
 
-.img__arrow{
+.img__arrow {
     width: 20px;
     height: 20px;
 }
 
-.img__arrow.left{
+.img__arrow.left {
     transform: rotate(180deg);
     margin-right: 8px;
 }
@@ -87,7 +87,7 @@ h2::before {
 
 .attendance-table {
     width: 100%;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 8px;
     table-layout: fixed;
 }
@@ -96,7 +96,7 @@ th {
     height: 36px;
     color: #737373;
     font-weight: bold;
-    border-bottom: 3px solid #F0EFF2;
+    border-bottom: 3px solid #f0eff2;
     text-align: center;
 }
 
@@ -105,7 +105,7 @@ td {
     color: #737373;
     font-weight: bold;
     letter-spacing: 2px;
-    border-bottom: 2px solid #F0EFF2;
+    border-bottom: 2px solid #f0eff2;
     text-align: center;
 }
 
@@ -136,7 +136,7 @@ td {
     color: #000000;
 }
 
-.work-detail-readonly{
+.work-detail-readonly {
     color: #737373;
 }
 
@@ -152,7 +152,7 @@ td {
     justify-content: center;
     text-decoration: none;
     background-color: #000000;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 22px;
     letter-spacing: 3px;
     border-radius: 4px;

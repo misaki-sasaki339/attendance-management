@@ -104,13 +104,15 @@ class Work extends Model
 
     // 打刻機能
     // 出勤打刻
-    public function clockIn(){
+    public function clockIn()
+    {
         $this->clock_in = now();
         $this->save();
     }
 
     // 退勤打刻
-    public function clockOut(){
+    public function clockOut()
+    {
         $this->clock_out = now();
         $this->save();
     }
@@ -154,4 +156,3 @@ class Work extends Model
         return $this->application && $this->application->approval !== null;
     }
 }
-

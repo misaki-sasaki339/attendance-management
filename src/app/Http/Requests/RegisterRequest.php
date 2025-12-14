@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Requests;
+
 use Illuminate\Validation\Rule;
 use App\Models\Staff;
-
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest

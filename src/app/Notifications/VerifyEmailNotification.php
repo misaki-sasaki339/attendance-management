@@ -27,7 +27,7 @@ class VerifyEmailNotification extends BaseVerifyEmail
     {
         $verifyUrl = $this->verificationUrl($notifiable);
 
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject('【仮登録完了】メールアドレスの確認をお願いします')
             ->greeting($notifiable->name.' 様')
             ->line('このたびはご登録ありがとうございます。')

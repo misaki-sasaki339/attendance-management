@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Work;
-use Illuminate\Support\Facades\Auth;
 use Carbon\CarbonPeriod;
-use App\Models\Staff;
 
 class BaseWorkController extends Controller
 {

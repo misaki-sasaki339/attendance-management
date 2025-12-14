@@ -6,9 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class WorkRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
@@ -95,7 +92,7 @@ class WorkRequest extends FormRequest
                             "break_start.$i",
                             "休憩時間が不適切な値です"
                         );
-}
+                    }
                 }
 
                 // 休憩終了時間が入力されている場合

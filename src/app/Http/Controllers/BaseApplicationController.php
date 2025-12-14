@@ -19,8 +19,10 @@ class BaseApplicationController extends Controller
         ]);
 
         // スタッフは自分の申請分だけ取得
-        if ($staffId){
-            $query->whereHas('work', fn($q) =>
+        if ($staffId) {
+            $query->whereHas(
+                'work',
+                fn ($q) =>
                 $q->where('staff_id', $staffId)
             );
         }

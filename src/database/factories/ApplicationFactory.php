@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Application;
 use App\Models\Work;
 
 /**
@@ -30,6 +29,6 @@ class ApplicationFactory extends Factory
 
     public function approved(): static
     {
-        return $this->state(fn() => ['status' => 'approved']);
+        return $this->state(fn () => ['status' => 'approved']);
     }
 }

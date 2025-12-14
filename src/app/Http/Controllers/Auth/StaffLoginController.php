@@ -49,4 +49,3 @@ class StaffLoginController extends LoginController
         return redirect()->route('attendance.today');
     }
 }
-

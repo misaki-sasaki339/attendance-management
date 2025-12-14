@@ -38,7 +38,7 @@ class ApplicationController extends BaseApplicationController
 
         // 休憩をJSON型に整形
         $breaks = [];
-        if($request->break_start) {
+        if ($request->break_start) {
             foreach ($request->break_start as $i => $start) {
                 $end = $request->break_end[$i] ?? null;
 
@@ -51,7 +51,7 @@ class ApplicationController extends BaseApplicationController
             }
         }
         $application = Application::updateOrCreate(
-            ['work_id'=> $work->id],
+            ['work_id' => $work->id],
             [
                 'new_clock_in' => $newClockIn,
                 'new_clock_out' => $newClockOut,

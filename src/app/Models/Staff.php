@@ -3,18 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\VerifyEmailNotification;
-use Illuminate\Auth\Notifications\VerifyEmail;
-use Database\Factories\StaffFactory;
-
 
 class Staff extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     protected $table = 'staffs';
 
@@ -55,7 +52,17 @@ class Staff extends Authenticatable implements MustVerifyEmail
 
     // 管理者は除く処理
     public function scopeNotAdmin($query)
-{
-    return $query->where('role', '!=', 'admin');
-}
+    {
+        return $query->where('role', '!=', 'admin');
+    }
+
+    // 管理者をメール認証の対象から外す
+    public function hasVerifiedEmail()
+    {
+        if ($this->isAdmin()) {
+            return true;
+        }
+
+        return ! is_null($this->email_verified_at);
+    }
 }

@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Staff;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BaseWorkController;
 use App\Models\Work;
-use App\Models\Application;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 
 class WorkController extends BaseWorkController
 {
@@ -100,4 +97,3 @@ class WorkController extends BaseWorkController
         ]);
     }
 }
-

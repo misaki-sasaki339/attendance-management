@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Work;
 use App\Models\Staff;
@@ -14,7 +13,7 @@ class WorkWithBreakSeeder extends Seeder
 {
     public function run(): void
     {
-        $period = CarbonPeriod::create('2025-08-01', '2025-10-31');
+        $period = CarbonPeriod::create('2025-08-01', '2025-12-14');
         $staffs = Staff::where('role', 'staff')->get();
 
         foreach ($staffs as $staff) {

@@ -1,5 +1,5 @@
-.application-wrapper{
-    background-color: #F0EFF2;
+.application-wrapper {
+    background-color: #f0eff2;
 }
 
 .application-container {
@@ -30,13 +30,13 @@ h2::before {
     border-radius: 2px;
 }
 
-.tabs{
+.tabs {
     width: 100%;
     border-bottom: 2px solid #000000;
 }
 
-.tab__list  {
-    gap: 80px
+.tab__list {
+    gap: 80px;
 }
 
 .tabs li {
@@ -44,7 +44,7 @@ h2::before {
 }
 
 .tab-link {
-    color: #A0A0A0;
+    color: #a0a0a0;
     font-weight: bold;
     padding-bottom: 8px;
     text-decoration: none;
@@ -56,9 +56,9 @@ h2::before {
     color: #000000;
 }
 
-.application-table{
+.application-table {
     margin-top: 40px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 8px;
     width: 100%;
     table-layout: fixed;
@@ -68,7 +68,7 @@ h2::before {
     height: 48px;
     color: #737373;
     font-weight: bold;
-    border-bottom: 3px solid #F0EFF2;
+    border-bottom: 3px solid #f0eff2;
     text-align: center;
     font-size: 15px;
     letter-spacing: 2px;
@@ -79,7 +79,7 @@ h2::before {
     color: #737373;
     font-weight: bold;
     letter-spacing: 2px;
-    border-bottom: 2px solid #F0EFF2;
+    border-bottom: 2px solid #f0eff2;
     text-align: center;
     font-size: 15px;
 }

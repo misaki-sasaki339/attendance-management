@@ -1,4 +1,4 @@
-.verify-email__container{
+.verify-email__container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,7 +16,7 @@
 
 .form__button-submit {
     display: flex;
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     color: #000000;
     text-decoration: none;
     border: 1px solid #000000;
@@ -32,9 +32,9 @@
     margin-bottom: 56px;
 }
 
-.form__link{
+.form__link {
     all: unset;
     cursor: pointer;
-    color: #0073CC;
+    color: #0073cc;
     font-size: 16px;
 }

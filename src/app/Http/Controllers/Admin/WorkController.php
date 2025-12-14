@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseWorkController;
 use Carbon\Carbon;
 use App\Models\Work;
 use App\Models\Staff;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Http\Requests\WorkRequest;
 
@@ -82,7 +80,8 @@ class WorkController extends BaseWorkController
                 ]);
             }
         }
-        return redirect()->route('admin.index')->with('flash_message', '勤怠情報を修正しました')->with('flash_type', 'success');;
+        return redirect()->route('admin.index')->with('flash_message', '勤怠情報を修正しました')->with('flash_type', 'success');
+        ;
     }
 
     // スタッフ一覧の表示
@@ -117,7 +116,7 @@ class WorkController extends BaseWorkController
 
         $days = $this->getMonthlyAttendance($staffId, $targetMonth);
 
-        $response = new StreamedResponse(function() use ($days) {
+        $response = new StreamedResponse(function () use ($days) {
             $handle = fopen('php://output', 'w');
 
             fputcsv($handle, ['日付','出勤', '退勤', '休憩', '合計']);
