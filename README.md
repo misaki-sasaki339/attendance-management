@@ -129,13 +129,13 @@ http://localhost:8025
 ## テストアカウント
 
 一般ユーザー<br />
-http://localhost/login にアクセスしログインしてください
+http://localhost/login にアクセスしログインしてください<br />
 name:テストスタッフ<br />
 email:staff@example.com<br />
 password:staff123<br />
 
 管理者<br />
-http://localhost/admin/login にアクセスしログインしてください
+http://localhost/admin/login にアクセスしログインしてください<br />
 name:管理者<br />
 email:admin@example.com<br />
 password:admin123
